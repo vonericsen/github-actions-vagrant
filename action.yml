@@ -91,7 +91,7 @@ runs:
         Vagrant.configure("2") do |config|
           config.vm.box = "${{inputs.box}}"
           config.vm.box_version = "${{inputs.box-version}}"
-          config.vm.boot_timeout = 600
+          config.vm.boot_timeout = ${{inputs.timeout}}
           config.vm.provider "virtualbox" do |vb|
             vb.memory = "${{inputs.mem}}"
             vb.cpus   = "${{inputs.ncpu}}"
