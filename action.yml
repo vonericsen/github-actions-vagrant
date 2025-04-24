@@ -26,6 +26,10 @@ inputs:
     description: 'the type of synced_folder'
     required: false
     default: 'rsync'
+  timeout:
+    description: 'the boot timeout. Default is 300 seconds'
+    required: false
+    default: '300'
 branding:
   icon: 'activity'  
   color: 'green'
@@ -87,6 +91,7 @@ runs:
         Vagrant.configure("2") do |config|
           config.vm.box = "${{inputs.box}}"
           config.vm.box_version = "${{inputs.box-version}}"
+          config.vm.boot_timeout = "${{inputs.timeout}}"
           config.vm.provider "virtualbox" do |vb|
             vb.memory = "${{inputs.mem}}"
             vb.cpus   = "${{inputs.ncpu}}"
