@@ -26,6 +26,10 @@ inputs:
     description: 'the type of synced_folder'
     required: false
     default: 'rsync'
+  sync-disabled:
+    description: 'the "disabled" boolean option for a vagrant configuration on a synched-folder'
+    required: false
+    default: 'false'
   timeout:
     description: 'the boot timeout. Default is 300 seconds'
     required: false
@@ -96,7 +100,7 @@ runs:
             vb.memory = "${{inputs.mem}}"
             vb.cpus   = "${{inputs.ncpu}}"
           end
-          config.vm.synced_folder "${GITHUB_WORKSPACE}", "/home/vagrant/${GITHUB_REPOSITORY}", type: "${{inputs.sync-type}}"
+          config.vm.synced_folder "${GITHUB_WORKSPACE}", "/home/vagrant/${GITHUB_REPOSITORY}", type: "${{inputs.sync-type}}", disabled: ${{inputs.sync-disabled}}
           config.vm.provision "shell", path: "shell.sh"
         end
       EOF
