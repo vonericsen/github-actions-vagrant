@@ -101,23 +101,23 @@ runs:
 
       
       cat > Vagrantfile <<EOF
-        Vagrant.configure("2") do |config|
-          config.vm.box = "${{inputs.box}}"
-          config.vm.box_version = "${{inputs.box-version}}"
-          config.vm.boot_timeout = ${{inputs.timeout}}
-          config.vm.provider "virtualbox" do |vb|
-            vb.memory = "${{inputs.mem}}"
-            vb.cpus   = "${{inputs.ncpu}}"
-            if "${{inputs.nictype}}" != ""
-              vb.customize ["modifyvm", :id, "--nictype1", "${{inputs.nictype}}"]
-            end
-            if "${{inputs.storagectl}}" != ""
-              vb.customize ["storagectl", :id, "--name", "${{inputs.storagectl}}", "--add", "ide"]
-            end
-          end
-          config.vm.synced_folder "${GITHUB_WORKSPACE}", "/home/vagrant/${GITHUB_REPOSITORY}", type: "${{inputs.sync-type}}", disabled: ${{inputs.sync-disabled}}
-          config.vm.provision "shell", path: "shell.sh"
-        end
+        Vagrant.configure("2") do |config|
+          config.vm.box = "${{inputs.box}}"
+          config.vm.box_version = "${{inputs.box-version}}"
+          config.vm.boot_timeout = ${{inputs.timeout}}
+          config.vm.provider "virtualbox" do |vb|
+            vb.memory = "${{inputs.mem}}"
+            vb.cpus   = "${{inputs.ncpu}}"
+            if "${{inputs.nictype}}" != ""
+              vb.customize ["modifyvm", :id, "--nictype1", "${{inputs.nictype}}"]
+            end
+            if "${{inputs.storagectl}}" != ""
+              vb.customize ["storagectl", :id, "--name", "${{inputs.storagectl}}", "--add", "ide"]
+            end
+          end
+          config.vm.synced_folder "${GITHUB_WORKSPACE}", "/home/vagrant/${GITHUB_REPOSITORY}", type: "${{inputs.sync-type}}", disabled: ${{inputs.sync-disabled}}
+          config.vm.provision "shell", path: "shell.sh"
+        end
       EOF
 
       
