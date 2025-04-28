@@ -34,6 +34,14 @@ inputs:
     description: 'the boot timeout. Default is 300 seconds'
     required: false
     default: '300'
+  nictype:
+    description: 'Specify a specific model of network adapter for the box'
+    required: false
+    default: ''
+  storagectl:
+    description: 'Specify a type of storage controller for the box'
+    required: false
+    default: ''
 branding:
   icon: 'activity'  
   color: 'green'
@@ -99,6 +107,12 @@ runs:
           config.vm.provider "virtualbox" do |vb|
             vb.memory = "${{inputs.mem}}"
             vb.cpus   = "${{inputs.ncpu}}"
+            if ${{inputs.nictype}}
+              vb.customize ["modifyvm", :id, "--nictype1', ${{inputs.nictype}}]]
+            end
+            if ${{inputs.storagectl}}
+              vb.customize ["storagectl", :id, "--name", ${{inputs.storagectl}}, "--add", "ide"]
+            end
           end
           config.vm.synced_folder "${GITHUB_WORKSPACE}", "/home/vagrant/${GITHUB_REPOSITORY}", type: "${{inputs.sync-type}}", disabled: ${{inputs.sync-disabled}}
           config.vm.provision "shell", path: "shell.sh"
